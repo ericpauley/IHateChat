@@ -1,0 +1,17 @@
+name: IHateChat
+version: 1.0.0
+main: org.zonedabone.ihatechat.IHateChat
+depend:
+  - Vault
+commands:
+  tell:
+    description: Send a private message to a player
+    aliases:
+      - msg
+      - message
+      - whipser
+      - pm
+  reply:
+    description: Reply to the last person who sent you a message
+    aliases:
+      - r
