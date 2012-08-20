@@ -1,6 +1,5 @@
 package org.zonedabone.ihatechat;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +101,7 @@ public class IHateChat extends JavaPlugin implements Listener {
 					Player targetStorage = conversations.get(p);
 					for(Player target:targets){
 						conversations.put(p, target);
-						p.chat(StringUtils.join(Arrays.copyOfRange(args, 1, args.length)));
+						p.chat(StringUtils.join(args, " ", 1, args.length));
 					}
 					conversations.put(p, targetStorage);
 				}
@@ -133,7 +132,7 @@ public class IHateChat extends JavaPlugin implements Listener {
 			if (args.length > 0) {
 				Player targetStorage = conversations.get(p);
 				conversations.put(p, target);
-				p.chat(StringUtils.join(args));
+				p.chat(StringUtils.join(args, " "));
 				conversations.put(p, targetStorage);
 			} else {
 				conversations.put(p, target);
