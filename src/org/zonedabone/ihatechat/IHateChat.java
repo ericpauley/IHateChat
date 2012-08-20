@@ -36,6 +36,14 @@ public class IHateChat extends JavaPlugin implements Listener {
 		setupChat();
 	}
 
+	public void onDisable() {
+		for(Map.Entry<Player, Player> convo:conversations.entrySet()){
+			convo.getKey().sendMessage(ChatColor.LIGHT_PURPLE + "Your conversation with " + convo.getValue().getName() + " has ended because of a reload.");
+		}
+		conversations.clear();
+		lastTells.clear();
+	}
+
 	private boolean setupChat() {
 		RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
 		if (chatProvider != null) {
@@ -95,11 +103,11 @@ public class IHateChat extends JavaPlugin implements Listener {
 		if (command.getName().equals("tell")) {
 			if (args.length > 1) {
 				List<Player> targets = getServer().matchPlayer(args[0]);
-				if(targets.size()<1){
-					p.sendMessage(ChatColor.RED+"No user by that name found.");
-				}else{
+				if (targets.size() < 1) {
+					p.sendMessage(ChatColor.RED + "No user by that name found.");
+				} else {
 					Player targetStorage = conversations.get(p);
-					for(Player target:targets){
+					for (Player target : targets) {
 						conversations.put(p, target);
 						p.chat(StringUtils.join(args, " ", 1, args.length));
 					}
@@ -107,18 +115,18 @@ public class IHateChat extends JavaPlugin implements Listener {
 				}
 			} else if (args.length > 0) {
 				List<Player> targets = getServer().matchPlayer(args[0]);
-				if(targets.size()>1){
-					p.sendMessage(ChatColor.RED+"More than one person matched the provided username.");
-				}else if(targets.size()<1){
-					p.sendMessage(ChatColor.RED+"No user by that name found.");
-				}else{
+				if (targets.size() > 1) {
+					p.sendMessage(ChatColor.RED + "More than one person matched the provided username.");
+				} else if (targets.size() < 1) {
+					p.sendMessage(ChatColor.RED + "No user by that name found.");
+				} else {
 					conversations.put(p, targets.get(0));
 					p.sendMessage(ChatColor.LIGHT_PURPLE + "Started a conversation with " + targets.get(0).getName() + ".");
 				}
 			} else {
 				if (conversations.get(p) == null) {
-					p.sendMessage(ChatColor.RED+"You aren't in a conversation.");
-				}else{
+					p.sendMessage(ChatColor.RED + "You aren't in a conversation.");
+				} else {
 					p.sendMessage(ChatColor.LIGHT_PURPLE + "Your conversation with " + conversations.get(p).getName() + " has ended.");
 					conversations.remove(p);
 				}
